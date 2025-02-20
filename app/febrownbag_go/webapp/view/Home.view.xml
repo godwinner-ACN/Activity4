@@ -1,0 +1,9 @@
+<mvc:View controllerName="febrownbaggo.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="FE Brownbag">
+        <content>
+            <Button id="button" text="Click Me!" press="onButtonPress"/>
+        </content>
+    </Page>
+</mvc:View>

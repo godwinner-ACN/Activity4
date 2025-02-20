@@ -1,0 +1,95 @@
+_schema-version: 3.3.0
+ID: FEBrownbag_GO
+description: A simple CAP project.
+version: 1.0.0
+modules:
+  - name: FEBrownbag_GO-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: FEBrownbag_GO-auth
+      - name: FEBrownbag_GO-db
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+  - name: FEBrownbag_GO-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: FEBrownbag_GO-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: FEBrownbag_GO-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: FEBrownbag_GO-destination-service
+        parameters:
+          content-target: true
+      - name: FEBrownbag_GO_html_repo_host
+        parameters:
+          service-key:
+            name: FEBrownbag_GO_html_repo_host-key
+      - name: FEBrownbag_GO-auth
+        parameters:
+          service-key:
+            name: FEBrownbag_GO-auth-key
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: febrownbag_go_FEBrownbag_GO_html_repo_host
+              ServiceInstanceName: FEBrownbag_GO-html5-app-host-service
+              ServiceKeyName: FEBrownbag_GO_html_repo_host-key
+              sap.cloud.service: febrownbag_go
+            - Authentication: OAuth2UserTokenExchange
+              Name: febrownbag_go_FEBrownbag_GO_auth
+              ServiceInstanceName: FEBrownbag_GO-auth
+              ServiceKeyName: FEBrownbag_GO-auth-key
+              sap.cloud.service: febrownbag_go
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+resources:
+  - name: FEBrownbag_GO-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        tenant-mode: dedicated
+        xsappname: FEBrownbag_GO-${org}-${space}
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+  - name: FEBrownbag_GO-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: FEBrownbag_GO-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+      service: destination
+      service-name: FEBrownbag_GO-destination-service
+      service-plan: lite
+  - name: FEBrownbag_GO_html_repo_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: FEBrownbag_GO-html5-app-host-service
+      service-plan: app-host
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
