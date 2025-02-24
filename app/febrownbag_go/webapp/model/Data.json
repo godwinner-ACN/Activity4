@@ -1,0 +1,40 @@
+{
+    "Reports": [
+        {
+       
+            "Year": "2021",
+           
+            "Baguio": 27,
+            "Urdaneta": 32,
+            "Tabuk": 25,
+            "Laoag": 34
+       
+        },
+        {
+            "Year": "2022",
+           
+            "Baguio": 31,
+            "Urdaneta": 40,
+            "Tabuk": 28,
+            "Laoag": 42
+        },
+        {
+            "Year": "2023",
+           
+            "Baguio": 36,
+            "Urdaneta": 45,
+            "Tabuk": 34,
+            "Laoag": 50
+        },
+        {
+            "Year": "2024",
+           
+            "Baguio": 41,
+            "Urdaneta": 50,
+            "Tabuk": 40,
+            "Laoag": 57
+        }
+   
+    ]
+   
+}

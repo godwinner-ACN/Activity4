@@ -1,0 +1,10 @@
+<mvc:View controllerName="febrownbaggo.controller.Page2"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <App id="Page2">
+        <Page id="page2" title="Fiori App" showNavButton="true" navButtonPress=".onNavBack">
+            <Text id="welcomeText" text="WELCOME TO PAGE 2" class="welcomeText" />
+        </Page>    
+    </App>
+</mvc:View>

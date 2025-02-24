@@ -96,12 +96,23 @@
           "target": [
             "TargetHome"
           ]
+        },
+        {
+          "name": "RoutePage2",
+          "pattern": "page2",
+          "target": [
+            "TargetPage2"
+          ]
         }
       ],
       "targets": {
         "TargetHome": {
           "id": "Home",
           "name": "Home"
+        },
+        "TargetPage2": {
+          "viewId": "Page2",
+          "viewName": "Page2"
         }
       }
     },
